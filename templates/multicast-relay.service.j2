@@ -1,0 +1,14 @@
+# https://github.com/alsmith/multicast-relay
+
+[Unit]
+Description=Multicast Relay Service
+After=multi-user.target
+After=multi-user.target
+
+[Service]
+Type=simple
+#Restart=always
+ExecStart=/usr/bin/python{% if python_version is defined %}{{ python_version }}{% endif %} /usr/local/bin/multicast-relay.py --interfaces{% for iface in multicast_relay_interfaces %} {{ iface }}{% endfor %}{% if multicast_relay_options is defined %}{% for option in multicast_relay_options %} {{ option }}{% endfor %}{% endif %} --foreground
+
+[Install]
+WantedBy=multi-user.target

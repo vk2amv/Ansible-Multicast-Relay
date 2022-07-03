@@ -1,0 +1,43 @@
+---
+
+- name: Apt Update package cache
+  apt:
+     update_cache: yes
+
+- name: Install required packages
+  package:
+    name: 
+      - "{{ item }}"
+    state: present
+  with_items:
+      - "{{ required_packages }}"
+
+- name: Install required pip packages
+  ansible.builtin.pip:
+    name:
+      - "{{ pip_packages }}"
+    state: present  
+    executable: "{{ pip_executable }}"
+
+- name: Copy Multicast Relay executable
+  template:
+    src: "multicast-relay.py"
+    dest: "/usr/local/bin"
+    mode: 0744
+
+- name: Generate Multicast Relay systemd service
+  template:
+    src: "multicast-relay.service.j2"
+    dest: "/etc/systemd/system/multicast-relay.service"
+
+- name: Enable Multicast Relay service in systemd
+  systemd:
+    name: multicast-relay
+    enabled: yes
+    masked: no
+
+- name: Reload systemd daemons and restart multicast-relay
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: multicast-relay

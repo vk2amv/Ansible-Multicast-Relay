@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: multicast-relay
+  author: Lindsay Harvey
+  company: Sol1 Pty Ltd
+  description: Ansible role to install Multicast-Relay
+  license: MIT
+  min_ansible_version: 2.6.0
+  platforms:
+    - name: Debian
+      versions: 
+        - buster
+        - bullseye
+  galaxy_tags:
+    - system
+    - networking
+    - managed
+dependencies: []

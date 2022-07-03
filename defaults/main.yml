@@ -1,0 +1,12 @@
+---
+
+# Deadmans switch to prevent this role overwriting existing configuration unless specifically set to run
+multicast_relay_run: "false"
+
+# Define interfaces to listen on
+multicast_relay_interfaces:
+  - '{{ ansible_default_ipv4.interface }}'
+
+# Define additional start up options
+multicast_relay_options: []
+  # - ''
